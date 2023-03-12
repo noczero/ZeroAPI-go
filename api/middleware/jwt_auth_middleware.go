@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/noczero/ZeroAPI-go/domain/web"
+	"github.com/noczero/ZeroAPI-go/exception"
 	"net/http"
 	"strings"
 
@@ -19,7 +19,7 @@ func JwtAuthMiddleware(secret string) gin.HandlerFunc {
 			if authorized {
 				userID, err := tokenutil.ExtractIDFromToken(authToken, secret)
 				if err != nil {
-					c.JSON(http.StatusUnauthorized, web.ErrorResponse{Message: err.Error()})
+					exception.ErrorHandler(c, http.StatusUnauthorized, err.Error())
 					c.Abort()
 					return
 				}
@@ -27,11 +27,11 @@ func JwtAuthMiddleware(secret string) gin.HandlerFunc {
 				c.Next()
 				return
 			}
-			c.JSON(http.StatusUnauthorized, web.ErrorResponse{Message: err.Error()})
+			exception.ErrorHandler(c, http.StatusUnauthorized, err.Error())
 			c.Abort()
 			return
 		}
-		c.JSON(http.StatusUnauthorized, web.ErrorResponse{Message: "Not authorized"})
+		exception.ErrorHandler(c, http.StatusUnauthorized, "Not authorized")
 		c.Abort()
 	}
 }
