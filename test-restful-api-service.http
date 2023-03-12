@@ -1,0 +1,31 @@
+### Login
+POST http://localhost:8080/api/v1/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "test11@test.com",
+  "password": "satrya"
+}
+
+### SignUp
+POST http://localhost:8080/api/v1/signup
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name" : "admin",
+  "email" : "admin@zeroinside.id",
+  "password" : "admin"
+}
+
+
+### Create Chat
+POST http://localhost:8080/api/v1/chat
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6IjY0MGRjYTA1NTU3NTcxZTI0ZmJjN2ZjNyIsImV4cCI6MTY3ODYzMjQ4NX0.KEck9hg9AgMSX7qMHrhEWRPVhFMCIuB5cRqPdnSCyjY
+
+{
+  "Prompt":  "How to be healthy"
+}
