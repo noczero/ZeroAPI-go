@@ -1,15 +1,17 @@
 ### Login
-POST http://localhost:8080/api/v1/login
+#POST http://localhost:8080/api/v1/login
+POST http://zeroinside.id:8082/api/v1/login
 Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "test11@test.com",
-  "password": "satrya"
+  "email": "admin@zeroinside.id",
+  "password": "admin"
 }
 
 ### SignUp
-POST http://localhost:8080/api/v1/signup
+#POST http://localhost:8080/api/v1/signup
+POST http://zeroinside.id:8082/api/v1/signup
 Content-Type: application/json
 Accept: application/json
 
@@ -21,10 +23,11 @@ Accept: application/json
 
 
 ### Create Chat
-POST http://localhost:8080/api/v1/chat
+#POST http://localhost:8080/api/v1/chat
+POST http://zeroinside.id:8082/api/v1/chat
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6IjY0MGRjYTA1NTU3NTcxZTI0ZmJjN2ZjNyIsImV4cCI6MTY3ODYzMjQ4NX0.KEck9hg9AgMSX7qMHrhEWRPVhFMCIuB5cRqPdnSCyjY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6IjY0MGRlZWRhZWMxMTU1NmExODUwOTk4NyIsImV4cCI6MTY3ODY0MTk0Nn0.BtNC1gRsngD10GLIX0skibvRrf_bmDknH14fKoAby5A
 
 {
   "Prompt":  "How to be healthy"
