@@ -34,6 +34,7 @@ func PageNotFoundHandler(engine *gin.Engine) {
 }
 
 func MethodNotAllowedHandler(engine *gin.Engine) {
+	engine.HandleMethodNotAllowed = true
 	engine.NoMethod(func(context *gin.Context) {
 		ErrorHandler(context, http.StatusMethodNotAllowed, "METHOD NOT ALLOWED")
 	})

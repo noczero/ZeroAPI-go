@@ -5,23 +5,21 @@ import (
 	"github.com/noczero/ZeroAPI-go/exception"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func ErrorHandlerMiddleware() gin.HandlerFunc {
 	return func(context *gin.Context) {
+		context.Next()
 
-		// no error then next
-		if len(context.Errors) <= 0 {
-			context.Next()
-			return
+		if len(context.Errors) > 0 {
+			var errorString strings.Builder
+			for _, err := range context.Errors {
+				log.Printf("Error -> %+v\n", err)
+				errorString.WriteString(err.Error() + "\n")
+			}
+			exception.ErrorHandler(context, http.StatusInternalServerError, errorString.String())
 		}
-
-		for _, err := range context.Errors {
-			log.Printf("Error -> %+v\n", err)
-		}
-
-		exception.ErrorHandler(context, http.StatusInternalServerError, "INTERNAL SERVER ERROR")
-		context.Abort()
 		return
 	}
 }

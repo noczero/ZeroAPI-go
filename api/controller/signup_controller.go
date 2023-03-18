@@ -28,6 +28,9 @@ func (sc *SignupController) Signup(c *gin.Context) {
 
 	_, err = sc.SignupUsecase.GetUserByEmail(c, request.Email)
 	if err == nil {
+
+		//c.Error(errors.New("Will catch in error middleware")) E
+
 		exception.ErrorHandler(c, http.StatusConflict, "User already exists with the given email")
 		return
 	}
