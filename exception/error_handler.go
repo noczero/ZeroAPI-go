@@ -18,9 +18,23 @@ func ErrorHandler(ctx *gin.Context, code int, err string) {
 		mainResponse.Status = "BAD REQUEST"
 	} else if code == http.StatusUnauthorized {
 		mainResponse.Status = "UNAUTHORIZED"
+	} else if code == http.StatusConflict {
+		mainResponse.Status = "CONFLICT"
 	} else {
-		mainResponse.Status = "INTERAL SERVER ERROR"
+		mainResponse.Status = "INTERNAL SERVER ERROR"
 	}
 
 	ctx.JSON(code, mainResponse)
+}
+
+func PageNotFoundHandler(engine *gin.Engine) {
+	engine.NoRoute(func(context *gin.Context) {
+		ErrorHandler(context, http.StatusNotFound, "PAGE NOT FOUND")
+	})
+}
+
+func MethodNotAllowedHandler(engine *gin.Engine) {
+	engine.NoMethod(func(context *gin.Context) {
+		ErrorHandler(context, http.StatusMethodNotAllowed, "METHOD NOT ALLOWED")
+	})
 }
