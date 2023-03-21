@@ -53,5 +53,11 @@ func (lc *LoginController) Login(c *gin.Context) {
 		RefreshToken: refreshToken,
 	}
 
-	c.JSON(http.StatusOK, loginResponse)
+	resultResponse := web.MainResponse{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   loginResponse,
+	}
+
+	c.JSON(http.StatusOK, resultResponse)
 }

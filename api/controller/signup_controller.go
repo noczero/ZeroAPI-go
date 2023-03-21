@@ -76,5 +76,11 @@ func (sc *SignupController) Signup(c *gin.Context) {
 		RefreshToken: refreshToken,
 	}
 
-	c.JSON(http.StatusOK, signupResponse)
+	resultResponse := web.MainResponse{
+		Code:   http.StatusCreated,
+		Status: "CREATED",
+		Data:   signupResponse,
+	}
+
+	c.JSON(http.StatusCreated, resultResponse)
 }

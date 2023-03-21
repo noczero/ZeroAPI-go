@@ -1,6 +1,6 @@
 ### Login
-#POST http://localhost:8080/api/v1/login
-POST http://zeroinside.id:8082/api/v1/login
+POST http://localhost:8080/api/v1/login
+#POST http://zeroinside.id:8082/api/v1/login
 Content-Type: application/json
 Accept: application/json
 
@@ -10,8 +10,8 @@ Accept: application/json
 }
 
 ### SignUp
-#POST http://localhost:8080/api/v1/signup
-POST http://zeroinside.id:8082/api/v1/signup
+POST http://localhost:8080/api/v1/signup
+#POST http://zeroinside.id:8082/api/v1/signup
 Content-Type: application/json
 Accept: application/json
 
@@ -23,12 +23,24 @@ Accept: application/json
 
 
 ### Create Chat
-#POST http://localhost:8080/api/v1/chat
-POST http://zeroinside.id:8082/api/v1/chat
+POST http://localhost:8080/api/v1/chat
+#POST http://zeroinside.id:8082/api/v1/chat
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6IjY0MGRlZWRhZWMxMTU1NmExODUwOTk4NyIsImV4cCI6MTY3ODY0MTk0Nn0.BtNC1gRsngD10GLIX0skibvRrf_bmDknH14fKoAby5A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6IjY0MGRjYTA1NTU3NTcxZTI0ZmJjN2ZjNyIsImV4cCI6MTY3OTQwMzM5OH0.IIVxFel7RCS22jL21Iee3MiN5pZ8dUyRdgUYm-XFYq0
 
 {
-  "Prompt":  "How to be healthy"
+  "Prompt":  "Recommend me a song with pop rock genre"
+}
+
+
+### NOT FOUND
+POST http://localhost:8080/api/v1/chat
+#POST http://zeroinside.id:8082/api/v1/chatss
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6IjY0MGRlZWRhZWMxMTU1NmExODUwOTk4NyIsImV4cCI6MTY3OTEyNjYxNX0.C5vIt8sFNf9epYpbG_qD53szzcfI7PXLG_7NCviufwc
+
+{
+  "Prompt":  "Recommend me a song with pop rock genre"
 }

@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/noczero/ZeroAPI-go/domain/model"
 	"github.com/noczero/ZeroAPI-go/domain/web"
+	"github.com/noczero/ZeroAPI-go/exception"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,7 @@ func (tc *TaskController) Create(c *gin.Context) {
 
 	err := c.ShouldBind(&task)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -27,19 +28,23 @@ func (tc *TaskController) Create(c *gin.Context) {
 
 	task.UserID, err = primitive.ObjectIDFromHex(userID)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	err = tc.TaskUsecase.Create(c, &task)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	c.JSON(http.StatusOK, web.SuccessResponse{
-		Message: "Task created successfully",
-	})
+	resultResponse := web.MainResponse{
+		Code:   http.StatusCreated,
+		Status: "CREATED",
+		Data:   task,
+	}
+
+	c.JSON(http.StatusCreated, resultResponse)
 }
 
 func (u *TaskController) Fetch(c *gin.Context) {
@@ -47,9 +52,14 @@ func (u *TaskController) Fetch(c *gin.Context) {
 
 	tasks, err := u.TaskUsecase.FetchByUserID(c, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	c.JSON(http.StatusOK, tasks)
+	resultResponse := web.MainResponse{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   tasks,
+	}
+	c.JSON(http.StatusOK, resultResponse)
 }

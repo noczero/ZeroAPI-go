@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/noczero/ZeroAPI-go/domain/web"
+	"github.com/noczero/ZeroAPI-go/exception"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,9 +17,14 @@ func (pc *ProfileController) Fetch(c *gin.Context) {
 
 	profile, err := pc.ProfileUsecase.GetProfileByID(c, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	c.JSON(http.StatusOK, profile)
+	resultResponse := web.MainResponse{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   profile,
+	}
+	c.JSON(http.StatusOK, resultResponse)
 }

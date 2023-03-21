@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/noczero/ZeroAPI-go/domain/web"
+	"github.com/noczero/ZeroAPI-go/exception"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,31 +19,31 @@ func (rtc *RefreshTokenController) RefreshToken(c *gin.Context) {
 
 	err := c.ShouldBind(&request)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id, err := rtc.RefreshTokenUsecase.ExtractIDFromToken(request.RefreshToken, rtc.Env.RefreshTokenSecret)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, web.ErrorResponse{Message: "User not found"})
+		exception.ErrorHandler(c, http.StatusUnauthorized, "User not found")
 		return
 	}
 
 	user, err := rtc.RefreshTokenUsecase.GetUserByID(c, id)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, web.ErrorResponse{Message: "User not found"})
+		exception.ErrorHandler(c, http.StatusUnauthorized, "User not found")
 		return
 	}
 
 	accessToken, err := rtc.RefreshTokenUsecase.CreateAccessToken(&user, rtc.Env.AccessTokenSecret, rtc.Env.AccessTokenExpiryHour)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	refreshToken, err := rtc.RefreshTokenUsecase.CreateRefreshToken(&user, rtc.Env.RefreshTokenSecret, rtc.Env.RefreshTokenExpiryHour)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, web.ErrorResponse{Message: err.Error()})
+		exception.ErrorHandler(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -51,5 +52,11 @@ func (rtc *RefreshTokenController) RefreshToken(c *gin.Context) {
 		RefreshToken: refreshToken,
 	}
 
-	c.JSON(http.StatusOK, refreshTokenResponse)
+	resultResponse := web.MainResponse{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   refreshTokenResponse,
+	}
+
+	c.JSON(http.StatusOK, resultResponse)
 }
