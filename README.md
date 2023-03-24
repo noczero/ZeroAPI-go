@@ -45,3 +45,5 @@ I have improved some feature such as :
 - Access API using `http://localhost:8080`
 
 
+## CI/CD
+- using jenkins poll SCM.
