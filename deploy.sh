@@ -4,4 +4,4 @@
 git pull origin master
 
 # build & run application
-docker compose up --build -d
+docker compose -f prod-docker-compose.yaml up --build -d
