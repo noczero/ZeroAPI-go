@@ -7,4 +7,4 @@ git pull origin master
 docker compose -f prod-docker-compose.yaml up --build -d
 
 # clear unused images
-docker image prune
+docker image prune -f
