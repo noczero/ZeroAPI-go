@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: app
+    image: zero-inside/web-app-api-golang
     container_name: app
     restart: unless-stopped
     env_file: .env
